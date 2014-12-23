@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  </head>
+<script>
+	var username = <%-JSON.stringify(username)%>;
+
+</script>  
+  
+  <body>
+    
+    <div class="col-md-4">
+    	Hello, <%= username %>
+    	<!--
+		<%= JSON.stringify(data) %>		
+		<%= JSON.stringify(onlineList) %>
+		-->
+		<a href='home/logout'>Logout</a>
+<!--	 
+	   <input type="text" id="usernameField"></input>
+	   <button id="addUserButton" type="button" class="btn btn-primary">Add User</button>
+-->	  
+	  	<ul>
+			<% for(var i=0; i<data[0].friends.length; i++){ %>
+			<li>
+				<%= onlineList[i].username %> 
+					<% if(onlineList[i].online===true) {%>
+						(online) <button id="connectUserButton<%=i%>" class="connect btn btn-success" type="button">Connect</button>
+					<% } %>
+			</li>	
+			<% } %>			
+		</ul>		
+		<!--
+		<div id="userlist">
+		</div>
+		-->
+	 <form action="home/addFriend" method="POST">
+		Friend: <input type="text" name="id"></input><br>
+		<button type="submit">Add Friend</button>
+    </form>
+		
+	</div>
+	
+	<div class="col-md-8" style="margin-top:0px;padding-top:0px">
+	
+    <video id="their-video" autoplay width=662 height=495 style="border-style:solid; border-width:2px"></video>
+    <video id="my-video" muted="true" autoplay width=200 height=200 style="position:absolute;top:308px;left:466px;"></video>
+     <textarea cols="125" rows="4" id="chatbox"></textarea>
+     <input type="text" id="chatfield" style="margin-bottom:60px"></input>
+     <button type="button" id="sendMessage">Send</button>
+    </div>
+  </body>
+  
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src="http://cdn.peerjs.com/0.3/peer.js"></script>
+  <script src='/javascripts/socket.js' ></script>
+  <script src='/javascripts/webrtc.js' ></script>
+	
+	<script>
+		
+		console.log("My username is - " + username);
+
+		var onlineList = <%-JSON.stringify(onlineList)%>;
+		console.log(JSON.stringify(onlineList));
+
+	$(function(){
+	
+		$('.connect').click(function(){
+		
+			var buttonID = $(this).attr('id');
+			
+			buttonID = parseInt(buttonID.substring(buttonID.length-1, buttonID.length));
+			
+			console.log(buttonID);	
+			
+			console.log("Their ID: " + onlineList[buttonID].peerid);
+			
+		//Connect for video sharing
+			var call = peer.call(onlineList[buttonID].peerid, mystream);		
+			
+			call.on('stream', function(remoteStream){
+			
+				$('#their-video').prop('src', URL.createObjectURL(remoteStream));			
+			
+			});
+		
+		//Connect for text messaging		
+		c = peer.connect(onlineList[buttonID].peerid);
+		
+		   c.on('data', function(data) {
+		   	console.log('received remote data');
+   			$('#chatbox').append(onlineList[buttonID].username + ': '+data.content + '\n');
+			});		
+		});
+	
+	});
+	
+	
+	</script>  
+  
+  
+</html>
+
+

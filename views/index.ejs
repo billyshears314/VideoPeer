@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+<center>
+    <ul>
+		<% for(var i=0; i<data.length; i++){	%>
+		<li>
+			<%= data[i].id %> <%= data[i].username %> <a href='/deleteUser?id=<%=data[i].id%>'>Delete</a>
+		</li>     
+		<% } %>
+    </ul>
+    
+    <div id="whole_form">
+    <div id="signup_area" class="form_area">
+	    <h2>Sign Up</h2>
+	    <form action="addUser" method="POST">
+		    Username: <input type="text" name="username"></input><br>
+		    Password: <input type="password" name="password"></input><br>
+		    <button type="submit">Submit</button>
+	    </form>
+    </div>
+    <hr>
+    <div id="login_area" class="form_area">
+    	<h2>Log In</h2>
+	    <form action="login" method="POST">
+			Username: <input type="text" name="username"></input><br>
+			Password	 <input type="password" name="password"></input></br>
+			<button type="submit">Submit</button>
+	    </form>
+    </div>
+    </div>
+    </center>
+  </body>
+   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
+</html>
