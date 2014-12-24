@@ -11,7 +11,8 @@ var client = new pg.Client(conString);
 client.connect();
 
 router.get('/', function(req, res){
-	
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	console.log("You are: " + req.session.user);	
 	
 	var statement = "SELECT friends FROM users WHERE username = ($1)";
@@ -77,7 +78,8 @@ router.post('/addFriend', function(req, res){
 });
 
 router.post('/setPeerId', function(req, res){
-	
+	  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	var statement = 'UPDATE users SET peerId = ($1) WHERE username = ($2)';
 	var params = [
  		req.body.peerId,
