@@ -3,7 +3,9 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 
 var pg = require("pg");
-var conString = "postgres://billy@localhost:5432/webrtc";
+//var conString = "postgres://billy@localhost:5432/webrtc";
+var conString = "postgres://jnjmeffshrcdjo:3I1Qo_G1yv2xvCZVmcEGjX11BJ@ec2-54-83-27-26.compute-1.amazonaws.com:5432/d4p7o0qg9a33ft";
+
 var client = new pg.Client(conString);
 
 client.connect();
@@ -18,26 +20,31 @@ router.get('/', function(req, res){
   	];
 
 	client.query(statement,params,function afterQuery(err,result){
+		
+	console.log("LOG: " + JSON.stringify(result.rows[0]));
 	
 	//var statement2 = "SELECT id, username, peerId, online FROM users WHERE id = ANY(SELECT friends FROM users WHERE username = ($1))";
-	var statement2 = "SELECT id, username, peerId, online FROM users WHERE id = ANY($1)";	
+	var statement2 = "SELECT id, username, peerid, status FROM users WHERE id = ANY(Array[3])";	
 	
-	if(result.rows[0].friends){
-		var friends = result.rows[0].friends;			
+	if(result.rows[0]){
+		console.log("TEST");
+		var friends = result.rows[0].friends;
+		console.log(friends);			
 	}	
 	else{
-		var friends = {};
+		var friends = [];
 	}
 	
 	var params2 = [
-		//req.session.user
-		//result.rows[0].friends
-		friends
+	//	friends
 	];		
 	
 	var friendsList = result.rows;
 	
-		client.query(statement2, params2, function afterQuery(err, result){
+		client.query(statement2, function afterQuery(err, result){
+	
+			console.log("LOG 2: " + JSON.stringify(result.rows));			
+			
 			if(req.session.user){
 				res.render('home', {title: 'Express', username: req.session.user, data: friendsList, onlineList: result.rows});
 			}

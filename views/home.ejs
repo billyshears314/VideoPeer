@@ -14,10 +14,11 @@
     
     <div class="col-md-4">
     	Hello, <%= username %>
-    	<!--
-		<%= JSON.stringify(data) %>		
+    	
+		<%= JSON.stringify(data) %>	
+		
 		<%= JSON.stringify(onlineList) %>
-		-->
+		
 		<a href='home/logout'>Logout</a>
 <!--	 
 	   <input type="text" id="usernameField"></input>
@@ -26,17 +27,15 @@
 	  	<ul>
 			<% for(var i=0; i<data[0].friends.length; i++){ %>
 			<li>
-				<%= onlineList[i].username %> 
-					<% if(onlineList[i].online===true) {%>
+				List: <%= onlineList[i].username %> 
+				Lenght: <%=data[0].friends.length %>
+					<% if(onlineList[i].status===true) {%>
 						(online) <button id="connectUserButton<%=i%>" class="connect btn btn-success" type="button">Connect</button>
 					<% } %>
 			</li>	
 			<% } %>			
 		</ul>		
-		<!--
-		<div id="userlist">
-		</div>
-		-->
+		
 	 <form action="home/addFriend" method="POST">
 		Friend: <input type="text" name="id"></input><br>
 		<button type="submit">Add Friend</button>
@@ -104,5 +103,4 @@
   
   
 </html>
-
 
