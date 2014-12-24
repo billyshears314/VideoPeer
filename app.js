@@ -26,6 +26,12 @@ app.use(cookieParser());
 app.use(session({secret: 'ssshhhhh', resave: false, saveUninitialized: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 app.use('/', routes);
 app.use('/home', home);
 app.use('/users', users);

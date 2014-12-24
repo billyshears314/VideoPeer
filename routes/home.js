@@ -88,7 +88,6 @@ router.post('/setPeerId', function(req, res){
  		console.log('Updated Peer Id');
  		console.log(req.body.peerId);
  		res.write('successfully updated peer Id');
- 		res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
  		//res.redirect('/home');
  	});
 	
