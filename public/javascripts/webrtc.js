@@ -56,7 +56,7 @@ $(document).ready(function() {
       console.log('search clicked');
       
 		$.ajax({
-			url: '/home/setPeerId',	
+			url: 'http://aqueous-headland-9640.herokuapp.com/home/setPeerId',	
 			type: 'POST',
 			data: JSON.stringify({peerId: peerId}),
 	       contentType: 'application/json',				
