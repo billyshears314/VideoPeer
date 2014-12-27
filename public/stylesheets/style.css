@@ -26,3 +26,13 @@ td{
 	display:inline-block;
 	background-color:#cc44cc;
 }
+
+#topbar{
+	width:100%;
+	height:50px;
+	background-color:#ccc;	
+}
+
+#login_area{
+	float:right;	
+}
