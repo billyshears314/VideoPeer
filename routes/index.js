@@ -4,9 +4,18 @@ var bodyParser = require('body-parser');
 
 var pg = require("pg");
 //var conString = "postgres://billy@localhost:5432/webrtc";
-var conString = "postgres://jnjmeffshrcdjo:3I1Qo_G1yv2xvCZVmcEGjX11BJ@ec2-54-83-27-26.compute-1.amazonaws.com:5432/d4p7o0qg9a33ft";
+//var conString = "postgres://jnjmeffshrcdjo:3I1Qo_G1yv2xvCZVmcEGjX11BJ@ec2-54-83-27-26.compute-1.amazonaws.com:5432/d4p7o0qg9a33ft";
 
-var client = new pg.Client(conString);				
+//var client = new pg.Client(conString);				
+
+var client = new pg.Client({
+    user: "jnjmeffshrcdjo",
+    password: "3I1Qo_G1yv2xvCZVmcEGjX11BJ",
+    database: "d4p7o0qg9a33ft",
+    port: 5432,
+    host: "ec2-54-83-27-26.compute-1.amazonaws.com",
+    ssl: true
+}); 
 				
 client.connect();
 
