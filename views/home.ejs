@@ -20,9 +20,10 @@
     
     <div class="col-md-4">
     	
-<!--    	
-		<%= JSON.stringify(data) %>	
-		
+    	
+<!--	
+		<%= JSON.stringify(data) %>
+	
 		<%= JSON.stringify(onlineList) %>
 -->		
 		
@@ -31,21 +32,31 @@
 	   <button id="addUserButton" type="button" class="btn btn-primary">Add User</button>
 -->	  
 	  	<ul>
+
+	
+	  	
 			<% for(var i=0; i<data[0].friends.length; i++){ %>
 			<li>
 				List: <%= onlineList[i].username %> 
-				Lenght: <%=data[0].friends.length %>
+				Length: <%=data[0].friends.length %>
 					<% if(onlineList[i].status===true) {%>
 						(online) <button id="connectUserButton<%=i%>" class="connect btn btn-success" type="button">Connect</button>
 					<% } %>
 			</li>	
-			<% } %>			
+			
+			<% } %>		
+			
+		
 		</ul>		
 		
 	 <form action="home/addFriend" method="POST">
 		Friend: <input id="friendName" type="text" name="id"></input><br>
 		<button type="submit">Add Friend</button>
     </form>
+    
+    <div id="friendToAddList">
+    	
+    </div>
 		
 	</div>
 	
@@ -74,19 +85,24 @@
 
 	$(function(){
 	
-	  $("input").keyup(function(){
-
-			console.log("Key up"); 
-		//	console.log("Friend Name: " + $('#friendName').value());   		
+	  $("input").keyup(function(){		
     		
 			$.ajax({
 				url: 'http://localhost:3000/home/getUsersMatchingString',	
 				type: 'POST',
-				data: JSON.stringify({friendName: 'fr'}),
+				data: JSON.stringify({friendName: $('#friendName').val()}),
 	      	 contentType: 'application/json',				
 	      	 success: function(data) {
 				 	console.log("success");
 				 	console.log(JSON.stringify(data));
+	
+					$('#friendToAddList').html('<ul>');				 	
+				 	
+				 	for(var i=0; i<data.length; i++){
+						$('#friendToAddList').append('<li>'+data[i].username+'</li>');
+				 	}
+				 	
+				 	$('#friendToAddList').append('</ul>');
 	          }
 	      });    		
     		

@@ -46,7 +46,7 @@ router.post('/addUser', function(req, res) {
 	var arr = [];
 	var status = true;
 
- 	var statement = 'INSERT INTO users VALUES (default, $1, $2, $3, $4, $5)';
+ 	var statement = "INSERT INTO users VALUES (default, $1, crypt($2, gen_salt('md5')), $3, $4, $5)";
 	var params = [
   		req.body.username,
    	req.body.password,
@@ -64,7 +64,7 @@ router.post('/addUser', function(req, res) {
 
 router.post('/login', function(req, res){
 	
-	var statement = 'SELECT * FROM users WHERE username=($1) AND password=($2)';
+	var statement = "SELECT * FROM users WHERE username=($1) AND password = crypt(($2), password)";
 	var params = [
   		req.body.username,
    	req.body.password,

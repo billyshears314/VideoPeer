@@ -29,7 +29,7 @@ router.get('/', function(req, res){
 	console.log("LOG: " + JSON.stringify(result.rows[0]));
 	
 	//var statement2 = "SELECT id, username, peerId, online FROM users WHERE id = ANY(SELECT friends FROM users WHERE username = ($1))";
-	var statement2 = "SELECT id, username, peerid, status FROM users WHERE id = ANY(Array[3])";	
+	var statement2 = "SELECT id, username, peerid, friends, status FROM users WHERE id = ANY(Array[3])";	
 	
 	if(result.rows[0]){
 		console.log("TEST");
@@ -100,10 +100,10 @@ router.post('/setPeerId', function(req, res){
 
 router.post('/getUsersMatchingString', function(req, res){
 	
-	console.log("FRIEND: " + req.body.id);	
+	console.log("FRIEND: " + req.body.friendName);	
 
 	
-	var startOfUsername = req.body.id+'%';	
+	var startOfUsername = req.body.friendName+'%';	
 	
 	var statement = "SELECT username from users WHERE username LIKE ($1)";
 	
