@@ -1,6 +1,7 @@
 body {
   padding: 0px;
   margin:0px;
+  margin-right:40px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -28,12 +29,14 @@ td{
 	background-color:#cc44cc;
 }
 
-#topbar{
+.topbar{
 	width:100%;
-	height:65px;
+	height:25px;
 	background-color:#ccc;	
+	padding:20px;
 }
 
 #login_area{
+	position:relative;
 	float:right;	
 }

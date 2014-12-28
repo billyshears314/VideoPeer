@@ -3,7 +3,8 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    
   </head>
 <script>
 	var username = <%-JSON.stringify(username)%>;
@@ -12,14 +13,19 @@
   
   <body>
     
+<div class="topbar">
+	Hello, <%= username %>
+	<span style="float:right;"><a href='home/logout'>Logout</a></span>
+</div>    
+    
     <div class="col-md-4">
-    	Hello, <%= username %>
     	
+<!--    	
 		<%= JSON.stringify(data) %>	
 		
 		<%= JSON.stringify(onlineList) %>
+-->		
 		
-		<a href='home/logout'>Logout</a>
 <!--	 
 	   <input type="text" id="usernameField"></input>
 	   <button id="addUserButton" type="button" class="btn btn-primary">Add User</button>
@@ -37,7 +43,7 @@
 		</ul>		
 		
 	 <form action="home/addFriend" method="POST">
-		Friend: <input type="text" name="id"></input><br>
+		Friend: <input id="friendName" type="text" name="id"></input><br>
 		<button type="submit">Add Friend</button>
     </form>
 		
@@ -67,6 +73,24 @@
 		console.log(JSON.stringify(onlineList));
 
 	$(function(){
+	
+	  $("input").keyup(function(){
+
+			console.log("Key up"); 
+		//	console.log("Friend Name: " + $('#friendName').value());   		
+    		
+			$.ajax({
+				url: 'http://localhost:3000/home/getUsersMatchingString',	
+				type: 'POST',
+				data: JSON.stringify({friendName: 'fr'}),
+	      	 contentType: 'application/json',				
+	      	 success: function(data) {
+				 	console.log("success");
+				 	console.log(JSON.stringify(data));
+	          }
+	      });    		
+    		
+  		});
 	
 		$('.connect').click(function(){
 		

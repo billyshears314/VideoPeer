@@ -3,10 +3,6 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 
 var pg = require("pg");
-//var conString = "postgres://billy@localhost:5432/webrtc";
-//var conString = "postgres://jnjmeffshrcdjo:3I1Qo_G1yv2xvCZVmcEGjX11BJ@ec2-54-83-27-26.compute-1.amazonaws.com:5432/d4p7o0qg9a33ft";
-
-//var client = new pg.Client(conString);
 
 var client = new pg.Client({
     user: "jnjmeffshrcdjo",
@@ -99,6 +95,27 @@ router.post('/setPeerId', function(req, res){
  		res.write('successfully updated peer Id');
  		//res.redirect('/home');
  	});
+	
+});
+
+router.post('/getUsersMatchingString', function(req, res){
+	
+	console.log("FRIEND: " + req.body.id);	
+
+	
+	var startOfUsername = req.body.id+'%';	
+	
+	var statement = "SELECT username from users WHERE username LIKE ($1)";
+	
+	var params = [
+		startOfUsername
+	]; 	
+	
+	client.query(statement, params, function afterQuery(err, result){
+		console.log("Got Users Matching String");		
+		console.log(JSON.stringify(result.rows));
+		res.send(result.rows);
+	});
 	
 });
 
