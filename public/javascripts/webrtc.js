@@ -25,7 +25,7 @@ $(document).ready(function() {
       // The `data` event is fired when data is received on the connection.
       connection.on('data', function(data) {
       	console.log('data received');
-         $('#chatbox').append(data.username + ': ' + data.content + '\n');
+         $('#chatbox').append(data.name + ': ' + data.content + '\n');
       });
    });
    
@@ -56,7 +56,8 @@ $(document).ready(function() {
       console.log('search clicked');
       
 		$.ajax({
-			url: 'http://videopeer.herokuapp.com/home/setPeerId',	
+			//url: 'http://videopeer.herokuapp.com/home/setPeerId',	
+			url: 'http://localhost:3000/home/setPeerId',
 			type: 'POST',
 			data: JSON.stringify({peerId: peerId}),
 	       contentType: 'application/json',				

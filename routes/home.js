@@ -25,37 +25,36 @@ router.get('/', function(req, res){
   	];
 
 	client.query(statement,params,function afterQuery(err,result){
-		
-	console.log("LOG: " + JSON.stringify(result.rows[0]));
+	
+	friends = JSON.stringify(result.rows[0].friends);
+
+	var params2 = [
+		friends
+	];		
 	
 	//var statement2 = "SELECT id, username, peerId, online FROM users WHERE id = ANY(SELECT friends FROM users WHERE username = ($1))";
-	var statement2 = "SELECT id, username, peerid, friends, status FROM users WHERE id = ANY(Array[3])";	
-	
-	if(result.rows[0]){
-		console.log("TEST");
-		var friends = result.rows[0].friends;
-		console.log(friends);			
-	}	
-	else{
-		var friends = [];
-	}
-	
-	var params2 = [
-	//	friends
-	];		
+	var statement2 = "SELECT id, username, peerid, friends, status FROM users WHERE id = Any(Array"+friends+")";	
 	
 	var friendsList = result.rows;
 	
 		client.query(statement2, function afterQuery(err, result){
 	
-			console.log("LOG 2: " + JSON.stringify(result.rows));			
-			
-			if(req.session.user){
+			if(result){
+				console.log("TRUE");	
+				if(req.session.user){
 				res.render('home', {title: 'Express', username: req.session.user, data: friendsList, onlineList: result.rows});
+				}
+				else{
+					res.redirect('/');
+				}	
+			}else{
+				if(req.session.user){
+					res.render('home', {title: 'Express', username: req.session.user, data: friendsList, onlineList: []});
+				}
+				else{
+					res.redirect('/');
+				}	
 			}
-			else{
-				res.redirect('/');
-			}	
 			
 		});
 		
@@ -63,21 +62,65 @@ router.get('/', function(req, res){
 
 });
 
+router.get('/updateFriendsData/:username?', function(req, res){
+	
+	var statement = 'SELECT friends FROM users WHERE username = ($1)';
+	
+	var params = [
+		req.param('username')	
+	]
+	
+	client.query(statement,params,function afterQuery(err,result){
+		
+		friends = JSON.stringify(result.rows[0].friends);
+
+		var params2 = [
+			friends
+		];	
+		
+		var statement2 = "SELECT id, username, peerid, status FROM users WHERE id = Any(Array"+friends+")";	
+	
+		var friendsList = result.rows;
+		
+		client.query(statement2, function afterQuery(err, result){
+	
+			if(result){
+				res.send(JSON.stringify(result.rows));
+			}else{
+				res.send({onlineList: []});
+			}
+			
+		});
+		
+	});
+	
+	
+});
+
 router.post('/addFriend', function(req, res){
 
-	console.log("Friend: " + req.body.id);
-	console.log("User: " + req.session.user);
-
- 	var statement = 'UPDATE users SET friends = array_append(friends, ($1)) WHERE username = ($2)';
+	console.log("Friend: " + req.body.friendName);
+	console.log("User: " + req.body.user);
+	
+	var statement = 'SELECT id FROM users where username = ($1)';
+	
 	var params = [
- 		req.body.id,
- 		req.session.user
-  	];
- 		 
- 	client.query(statement,params,function afterQuery(err,result){
- 		console.log('Friend Added')
- 		res.redirect('/home');
- 	});
+		req.body.friendName	
+	]
+	
+	client.query(statement, params, function  afterQuery(err, result){
+
+	 	var statement2 = 'UPDATE users SET friends = array_append(friends, ($1)) WHERE username = ($2)';
+		var params2 = [
+	 		result.rows[0].id,
+	 		req.body.user
+	  	];
+	 		 
+	 	client.query(statement2,params2,function afterQuery(err,result){
+	 		console.log('Friend Added')
+	 	});
+ 	
+	});
 	
 });
 
@@ -100,15 +143,13 @@ router.post('/setPeerId', function(req, res){
 
 router.post('/getUsersMatchingString', function(req, res){
 	
-	console.log("FRIEND: " + req.body.friendName);	
-
-	
 	var startOfUsername = req.body.friendName+'%';	
 	
-	var statement = "SELECT username from users WHERE username LIKE ($1)";
+	var statement = "SELECT id, username from users WHERE username LIKE ($1) AND username != ($2)";
 	
 	var params = [
-		startOfUsername
+		startOfUsername,
+		req.body.myUsername
 	]; 	
 	
 	client.query(statement, params, function afterQuery(err, result){
@@ -117,6 +158,20 @@ router.post('/getUsersMatchingString', function(req, res){
 		res.send(result.rows);
 	});
 	
+});
+
+router.get('/deleteAccount', function(req, res){
+	
+	var statement = 'Delete from users where username=($1)';
+	var params = [
+		req.session.user
+	]	
+	
+	client.query(statement, params, function afterQuery(err, result){
+		console.log('User Deleted');
+		res.redirect('/');	
+	});
+
 });
 
 router.get('/logout', function(req, res){

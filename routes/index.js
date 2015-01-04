@@ -31,7 +31,7 @@ router.get('/', function(req, res){
 	});	
 
 	query.on("end", function (result) {
-		res.render('index', {title: 'Express', data: result.rows});	
+		res.render('index', {title: 'Express', data: result.rows, message: req.flash('info')});	
 	});  
   
 });
@@ -40,24 +40,47 @@ router.post('/addUser', function(req, res) {
 	console.log('form posted');
 	console.log(req.body.username);
 	
-	req.session.user = req.body.username;	
+	statement1 = "SELECT id from users where username = ($1)";
 	
-	var peerId = "";
-	var arr = [];
-	var status = true;
-
- 	var statement = "INSERT INTO users VALUES (default, $1, crypt($2, gen_salt('md5')), $3, $4, $5)";
-	var params = [
-  		req.body.username,
-   	req.body.password,
-		peerId,   	
-   	arr,
-   	status
-  	];
- 		 
- 	client.query(statement,params,function afterQuery(err,result){
- 		console.log('User Added')
- 		res.redirect('/home');
+	params1 = [
+		req.body.username	
+	]	
+	
+	client.query(statement1, params1, function afterQuery(err, result){
+	
+		console.log("LOG: " + JSON.stringify(result.rowCount));	
+	
+		//If username doesn't exist, proceed with signup
+		if(result.rowCount==0){	
+	
+			req.session.user = req.body.username;	
+			
+			var peerId = "";
+			var arr = [];
+			var status = true;
+		
+		 	var statement = "INSERT INTO users VALUES (default, $1, crypt($2, gen_salt('md5')), $3, $4, $5)";
+			var params = [
+		  		req.body.username,
+		   	req.body.password,
+				peerId,   	
+		   	arr,
+		   	status
+		  	];
+		 		 
+		 	client.query(statement,params,function afterQuery(err,result){
+		 		console.log('User Added')
+		 		res.redirect('/home');
+		 	});
+	 	
+	 	}
+	 	else{
+	 		//Add Flash warning message that username already exists, choose another
+	 		req.flash('info', 'username already exists, please choose another'); 
+			res.redirect('/'); 		
+	 			
+	 	}
+ 	
  	});
  		 
 });   
@@ -77,6 +100,8 @@ router.post('/login', function(req, res){
 			res.redirect('/home'); 				
  		}
  		else{
+ 			//Flash warning that says it is the incorrect username or password
+			req.flash('info', 'Incorrect username or password'); 			
  			res.redirect('/');	
  		}
 

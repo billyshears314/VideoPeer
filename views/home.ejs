@@ -2,145 +2,75 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+       <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+ 
     
   </head>
 <script>
 	var username = <%-JSON.stringify(username)%>;
-
+	var onlineList = <%-JSON.stringify(onlineList)%>;
 </script>  
   
   <body>
     
 <div class="topbar">
+	<span style="font-size:28px">Video Peer</span>
 	Hello, <%= username %>
-	<span style="float:right;"><a href='home/logout'>Logout</a></span>
+	<span style="float:right;"><a href='home/logout'><button class="btn btn-danger">Logout</button></a></span>
+	<span style="float:right;margin-right:80px"><a href='home/deleteAccount'><button class="btn btn-default">Delete Account</button></a></span>
 </div>    
     
     <div class="col-md-4">
-    	
-    	
-<!--	
-		<%= JSON.stringify(data) %>
+	    	
+	<!--	 <form action="home/addFriend" method="POST">-->
+			Friend: <input id="friendName" type="text" name="id"></input>
+			<button id="addFriendBtn">Add Friend</button>
+	<!--    </form>-->
+		<div id="friendsListArea">
+		</div>
 	
-		<%= JSON.stringify(onlineList) %>
--->		
-		
-<!--	 
-	   <input type="text" id="usernameField"></input>
-	   <button id="addUserButton" type="button" class="btn btn-primary">Add User</button>
--->	  
-	  	<ul>
-
-	
-	  	
-			<% for(var i=0; i<data[0].friends.length; i++){ %>
-			<li>
-				List: <%= onlineList[i].username %> 
-				Length: <%=data[0].friends.length %>
-					<% if(onlineList[i].status===true) {%>
-						(online) <button id="connectUserButton<%=i%>" class="connect btn btn-success" type="button">Connect</button>
-					<% } %>
-			</li>	
-			
-			<% } %>		
-			
-		
-		</ul>		
-		
-	 <form action="home/addFriend" method="POST">
-		Friend: <input id="friendName" type="text" name="id"></input><br>
-		<button type="submit">Add Friend</button>
-    </form>
-    
-    <div id="friendToAddList">
-    	
-    </div>
-		
+	    <div id="friendToAddList">
+	    	
+	    </div>
+	<!--
+		<button id="gray_filter">Gray</button>		
+		<button id="sepia_filter">Sepia</button>
+		<button id="saturate_filter">Saturate</button>		
+		<button id="brightness_filter">Brightness</button>		
+		<button id="contrast_filter">Contrast</button>		
+		<button id="hue-rotate_filter">Hue Rotate</button>		
+		<button id="blur_filter">Blur</button>								
+		-->
 	</div>
 	
 	<div class="col-md-8" style="margin-top:0px;padding-top:0px">
 	
     <video id="their-video" autoplay width=662 height=495 style="border-style:solid; border-width:2px"></video>
-    <video id="my-video" muted="true" autoplay width=200 height=200 style="position:absolute;top:308px;left:466px;"></video>
+    <video id="my-video" class="draggable" muted="true" autoplay width=200 height=200 style="position:absolute;top:308px;left:466px;"></video>
      <textarea cols="125" rows="4" id="chatbox"></textarea>
      <input type="text" id="chatfield" style="margin-bottom:60px"></input>
      <button type="button" id="sendMessage">Send</button>
     </div>
   </body>
   
+
+  
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   <script src="javascripts/peer.js"></script>
   <script src='javascripts/socket.js' ></script>
   <script src='javascripts/webrtc.js' ></script>
-	
-	<script>
-		
-		console.log("My username is - " + username);
+  <script src='javascripts/filters.js'></script>
+  <script src='javascripts/main.js'></script>
 
-		var onlineList = <%-JSON.stringify(onlineList)%>;
-		console.log(JSON.stringify(onlineList));
-
-	$(function(){
-	
-	  $("input").keyup(function(){		
-    		
-			$.ajax({
-				url: 'http://localhost:3000/home/getUsersMatchingString',	
-				type: 'POST',
-				data: JSON.stringify({friendName: $('#friendName').val()}),
-	      	 contentType: 'application/json',				
-	      	 success: function(data) {
-				 	console.log("success");
-				 	console.log(JSON.stringify(data));
-	
-					$('#friendToAddList').html('<ul>');				 	
-				 	
-				 	for(var i=0; i<data.length; i++){
-						$('#friendToAddList').append('<li>'+data[i].username+'</li>');
-				 	}
-				 	
-				 	$('#friendToAddList').append('</ul>');
-	          }
-	      });    		
-    		
-  		});
-	
-		$('.connect').click(function(){
-		
-			var buttonID = $(this).attr('id');
-			
-			buttonID = parseInt(buttonID.substring(buttonID.length-1, buttonID.length));
-			
-			console.log(buttonID);	
-			
-			console.log("Their ID: " + onlineList[buttonID].peerid);
-			
-		//Connect for video sharing
-			var call = peer.call(onlineList[buttonID].peerid, mystream);		
-			
-			call.on('stream', function(remoteStream){
-			
-				$('#their-video').prop('src', URL.createObjectURL(remoteStream));			
-			
-			});
-		
-		//Connect for text messaging		
-		c = peer.connect(onlineList[buttonID].peerid);
-		
-		   c.on('data', function(data) {
-		   	console.log('received remote data');
-   			$('#chatbox').append(onlineList[buttonID].username + ': '+data.content + '\n');
-			});		
-		});
-	
-	});
-	
-	
-	</script>  
-  
+  <script>
+  $(function() {
+    $( "#my-video" ).draggable({ containment: "#their-video", scroll: false });
+  });
+  </script>
   
 </html>
 

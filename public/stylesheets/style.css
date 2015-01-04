@@ -31,12 +31,18 @@ td{
 
 .topbar{
 	width:100%;
-	height:25px;
+	height:65px;
 	background-color:#1FAB2F;	
-	padding:20px;
+	padding:15px;
 }
 
 #login_area{
 	position:relative;
 	float:right;	
 }
+
+tr{
+	border-collapse: collapse;
+	border-width:0px;
+}
+

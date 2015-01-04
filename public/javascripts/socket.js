@@ -2,7 +2,6 @@
  
 $(function(){
 
-	
 	$('#sendMessage').click(function(){
 	 	  sendMessage();
 	});
@@ -16,9 +15,9 @@ $(function(){
 	});
 	
 	function sendMessage(){
-		var message = {content: $('#chatfield').val()};		 	  
+		var message = {name: username, content: $('#chatfield').val()};		 	  
 	  	  c.send(message);
- 		  $('#chatbox').append(message.username +': ' + message.content + '\n');
+ 		  $('#chatbox').append(message.name +': ' + message.content + '\n');
   		  $('#chatfield').val('');
 	}
 	

@@ -1,43 +1,84 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
+<head>
+	<title><%= title %></title>
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+</head>
+<style>
+
+
+td{
+	padding:10px;
+}
+
+.form_label{
+	font-size:17px;
+}
+
+</style>
+<body>
 <div class="topbar">
 
 	<span style="font-size:28px">Video Peer</span>
 
 	<div id="login_area">
-	
+		
 		 <form action="login" method="POST">
 			Username: <input type="text" name="username"></input>
 			Password:	 <input type="password" name="password"></input>
-			<button type="submit">Login</button>
+			<button type="submit" class="btn btn-primary">Login</button>
 	    </form>
+		<a style="postion:absolute; top:0px; cursor:pointer" data-toggle="modal" data-target="#myModal">
+		  Sign Up
+		</a>
 
 	</div>
 </div>
-<!--
-    <ul>
-		<% for(var i=0; i<data.length; i++){	%>
-		<li>
-			<%= data[i].id %> <%= data[i].username %> <a href='/deleteUser?id=<%=data[i].id%>'>Delete</a>
-		</li>     
-		<% } %>
-    </ul>
--->
-	    <form action="addUser" method="POST">
-		    Username: <input type="text" name="username"></input>
-		    Password: <input type="password" name="password"></input>
-		    <button type="submit">Sign Up</button>
-	    </form>
 
-	    
+	<% if (message) { %>
+		<div style="color:#ff0000;font-size:14px"><%= message %></div>
+	<% } %>
+	
     </div>
+    
+    
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Create an Account<h4>
+      </div>
+      <form action="addUser" method="POST">
+	      <div class="modal-body">
+	      <center>
+	      	<% if (message) { %>
+					<div style="color:#ff0000;font-size:14px"><%= message %></div>
+				<% } %>
+	     		<table>
+	     			<tr>
+			   	<td class="form_label">Username: </td><td><input type="text" name="username"></input><br></td>
+			   	</tr>
+			   	<tr>
+			    	<td class="form_label">Password: </td><td><input type="password" name="password"></input></td>
+			    	</tr>
+			   </table>
+			 </center>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-primary">Sign Up</button>
+	      </div>
+      </form>
+    </div>
+  </div>
+</div>
 
   </body>
    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
 
 </html>
