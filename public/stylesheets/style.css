@@ -36,13 +36,8 @@ td{
 	padding:15px;
 }
 
-#login_area{
-	position:relative;
-	float:right;	
-}
 
 tr{
 	border-collapse: collapse;
 	border-width:0px;
 }
-
