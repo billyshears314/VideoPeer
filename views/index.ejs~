@@ -25,7 +25,7 @@ td{
 <body>
 <div class="topbar">
 
-	<span style="font-size:28px">Video Peer2</span>
+	<span style="font-size:28px">Video Peer</span>
 	
 	<div id="whole_box" style="float:right;">	
 		<% if (message) { %>
