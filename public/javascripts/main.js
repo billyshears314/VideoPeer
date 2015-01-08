@@ -31,7 +31,7 @@
 			else{
 			
 				$.ajax({
-					url: 'http://localhost:3000/home/getUsersMatchingString',	
+					url: 'http://'+hostSite+'/home/getUsersMatchingString',	
 					type: 'POST',
 					data: JSON.stringify({friendName: $('#friendName').val(), myUsername: JSON.stringify(username)}),
 		      	 contentType: 'application/json',				
@@ -61,7 +61,7 @@
 	 	$('#addFriendBtn').click(function(){				
 			
 			$.ajax({
-				url: 'http://localhost:3000/home/addFriend',	
+				url: 'http://'+hostSite+'/home/addFriend',	
 				type: 'POST',
 				data: JSON.stringify({friendName: $('#friendName').val(), user: username}),
 			   contentType: 'application/json',				
@@ -105,7 +105,7 @@
 function updateOnlineTimestamp(){
 
 	$.ajax({
-		url: 'http://localhost:3000/home/updateLastOnline',	
+		url: 'http://'+hostSite+'/home/updateLastOnline',	
 		type: 'POST',
    	contentType: 'application/json',				
    	success: function() {
@@ -134,7 +134,7 @@ var myFunction = function(){
 function updateFriendsList(){
 	
 		$.ajax({
-		url: 'http://localhost:3000/home/updateFriendsData?username='+username,
+		url: 'http://'+hostSite+'/home/updateFriendsData?username='+username,
 		type: 'GET',
 		contentType: 'application/json',
 		success: function(data) {
@@ -216,7 +216,7 @@ function updateFriendsList(){
 					console.log($(this).val());
 					
 					$.ajax({
-						url: 'http://localhost:3000/home/unfriend',	
+						url: 'http://'+hostSite+'/home/unfriend',	
 						type: 'POST',
 						data: JSON.stringify({friendName: $(this).val(), user: username}),
 					   contentType: 'application/json',				
