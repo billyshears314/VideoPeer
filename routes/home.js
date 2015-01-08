@@ -128,7 +128,7 @@ router.post('/addFriend', function(req, res){
 
 router.post('/setPeerId', function(req, res){
 
-	var statement = 'UPDATE users SET peerId = ($1) WHERE username = ($2)';
+	var statement = 'UPDATE users SET peerid = ($1) WHERE username = ($2)';
 	var params = [
  		req.body.peerId,
  		req.session.user
