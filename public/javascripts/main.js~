@@ -168,7 +168,7 @@ function updateFriendsList(){
 				}
 	
 				$('#friendsListArea').append('<li>' + data2[i].username + ': ' + status + ", " + timeDifference);	
-				if(status==="online"){
+				if(data2[i].status==="online"){
 					$('#friendsListArea').append('<button id="connectUserButton" class="connect btn btn-success" type="button" value="'+data2[i].peerid+'">Connect</button>');
 				}
 					$('#friendsListArea').append('<button id="unfriendButton" class="unfriend btn btn-success" type="button" value="'+data2[i].username+'">Remove</button>');

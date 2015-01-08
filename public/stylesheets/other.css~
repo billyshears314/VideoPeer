@@ -1,0 +1,13 @@
+td{
+	padding:10px;
+}
+
+.form_label{
+	font-size:17px;
+}
+.btn{
+	padding:4px 8px 4px 8px;	
+}
+.topbar{
+	background-color:#EAEAE1;
+}

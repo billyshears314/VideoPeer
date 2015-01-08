@@ -80,7 +80,7 @@ router.get('/updateFriendsData/:username?', function(req, res){
 			friends
 		];	
 		
-		var statement2 = "SELECT id, username, peerid, lastOnline FROM users WHERE id = Any(Array"+friends+")";	
+		var statement2 = "SELECT id, username, peerid FROM users WHERE id = Any(Array"+friends+")";	
 	
 		var friendsList = result.rows;
 		

@@ -4,24 +4,8 @@
 	<title><%= title %></title>
 	<link rel='stylesheet' href='/stylesheets/style.css' />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+	<link rel='stylesheet'  href='/stylesheets/other.css' />
 </head>
-<style>
-
-
-td{
-	padding:10px;
-}
-
-.form_label{
-	font-size:17px;
-}
-.btn{
-	padding:4px 8px 4px 8px;	
-}
-.topbar{
-	background-color:#EAEAE1;
-}
-</style>
 <body>
 <div class="topbar">
 
@@ -32,30 +16,25 @@ td{
 			<div style="color:#ff0000;font-size:14px;position:absolute;top:5px;"><%= message %></div>
 		<% } %>
 		<div style="margin-top:-10px; margin-bottom:-5px;font-size:13px;padding-bottom:0px;text-align:right">
-		Not a member?
-		<a  style="cursor:pointer" data-toggle="modal" data-target="#myModal">
-			Sign Up
-		</a>
+			Not a member?
+			<a  style="cursor:pointer" data-toggle="modal" data-target="#myModal">
+				Sign Up
+			</a>
 		</div>
 		
 		<div id="login_area" style="margin-top:10px;paddin-top:0px">
 			
 			 <form action="login" method="POST">
 				Username: <input type="text" name="username"></input>
-				Password:	 <input type="password" name="password"></input>
+				Password: <input type="password" name="password"></input>
 				<button type="submit" class="btn btn-primary">Login</button>
-		    </form>
-		
+		    </form>		
 	
 		</div>
 
 	</div>	
 	
 </div>
-
-
-	
-    </div>
     
     
 <!-- Modal -->
@@ -91,8 +70,8 @@ td{
   </div>
 </div>
 
-  </body>
-   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</body>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
 </html>

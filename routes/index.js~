@@ -57,13 +57,15 @@ router.post('/addUser', function(req, res) {
 			
 			var peerId = "";
 			var arr = [];
+			var status = true;
 		
-		 	var statement = "INSERT INTO users VALUES (default, $1, crypt($2, gen_salt('md5')), $3, $4)";
+		 	var statement = "INSERT INTO users VALUES (default, $1, crypt($2, gen_salt('md5')), $3, $4, $5)";
 			var params = [
 		  		req.body.username,
 		   	req.body.password,
 				peerId,   	
-		   	arr
+		   	arr,
+		   	status
 		  	];
 		 		 
 		 	client.query(statement,params,function afterQuery(err,result){
