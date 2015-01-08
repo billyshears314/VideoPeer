@@ -57,7 +57,7 @@ $(document).ready(function() {
       
 		$.ajax({
 			//url: 'http://videopeer.herokuapp.com/home/setPeerId',	
-			url: 'http://localhost:3000/home/setPeerId',
+			url: 'http://'+hostSite+'/home/setPeerId',
 			type: 'POST',
 			data: JSON.stringify({peerId: peerId}),
 	       contentType: 'application/json',				
