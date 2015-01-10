@@ -1,0 +1,48 @@
+td{
+	padding:10px;
+}
+
+.form_label{
+	font-size:17px;
+}
+
+.btn{
+	padding:4px 8px 4px 8px;	
+}
+
+.topbar{
+	background-color:#EAEAE1;
+}
+
+#whole_member_box{
+	float:right
+}
+
+#member_signup{
+	margin-top:-10px; 
+	margin-bottom:-10px;
+	font-size:13px;
+	padding-bottom:0px;
+	float:right;
+}
+
+#login_area{
+	margin-top:12px;
+	padding-top:0px;
+}
+
+#signup_link{
+	cursor:pointer;
+}
+
+.flash_message{
+	font-size:14px;
+	color:#ff0000;
+}
+
+#login_flash_message{
+	position:absolute;
+	top:5px;
+}
+
+#signup_flash_message{}

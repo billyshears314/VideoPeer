@@ -33,7 +33,7 @@ $(document).ready(function() {
 
 	navigator.getUserMedia({video: true, audio: true}, function(stream) {
 	mystream = stream;
-	$('#my-video').prop('src', URL.createObjectURL(mystream));
+	$('#my_video').prop('src', URL.createObjectURL(mystream));
 	}, function(err) {
 	  console.log('Failed to get local stream' ,err);
 	});
@@ -44,7 +44,7 @@ $(document).ready(function() {
 	  console.log('answer');
 	 call.answer(stream); // Answer the call with an A/V stream.
 	 call.on('stream', function(remoteStream) {
-	     $('#their-video').prop('src', URL.createObjectURL(remoteStream));
+	     $('#their_video').prop('src', URL.createObjectURL(remoteStream));
 	 });
 	  }, function(err) {
 	 console.log('Failed to get local stream' ,err);

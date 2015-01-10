@@ -4,25 +4,25 @@
 	<title><%= title %></title>
 	<link rel='stylesheet' href='/stylesheets/style.css' />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
-	<link rel='stylesheet'  href='/stylesheets/other.css' />
+	<link rel='stylesheet'  href='/stylesheets/landing_page.css' />
 </head>
 <body>
 <div class="topbar">
 
-	<span style="font-size:28px">Video Peer</span>
+	<span id="app_title">Video Peer</span>
 	
-	<div id="whole_box" style="float:right;">	
+	<div id="whole_member_box">	
 		<% if (message) { %>
-			<div style="color:#ff0000;font-size:14px;position:absolute;top:5px;"><%= message %></div>
+			<div id="login_flash_message" class="flash_message"><%= message %></div>
 		<% } %>
-		<div style="margin-top:-10px; margin-bottom:-5px;font-size:13px;padding-bottom:0px;text-align:right">
+		<div id="member_signup">
 			Not a member?
-			<a  style="cursor:pointer" data-toggle="modal" data-target="#myModal">
+			<a  id="signup_link" data-toggle="modal" data-target="#myModal">
 				Sign Up
 			</a>
 		</div>
 		
-		<div id="login_area" style="margin-top:10px;paddin-top:0px">
+		<div id="login_area">
 			
 			 <form action="login" method="POST">
 				Username: <input type="text" name="username"></input>
@@ -49,7 +49,7 @@
 	      <div class="modal-body">
 	      <center>
 	      	<% if (message) { %>
-					<div style="color:#ff0000;font-size:14px"><%= message %></div>
+					<div id="signup_flash_message" class="flash_message"><%= message %></div>
 				<% } %>
 	     		<table>
 	     			<tr>

@@ -3,8 +3,9 @@
 <head>
  <title><%= title %></title>
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
- <link rel='stylesheet' href='/stylesheets/style.css' />
+ <link rel="stylesheet" href="/stylesheets/style.css" />
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />  
+ <link rel="stylesheet" href="/stylesheets/home.css" />
 </head>
 <script>
 	var username = <%-JSON.stringify(username)%>;
@@ -16,24 +17,20 @@
 <body>
     
 <div class="topbar">
-	<span style="font-size:28px">Video Peer</span>
+	<span id="app_title">Video Peer</span>
 	Hello, <%= username %>
-	<span style="float:right;"><a href='home/logout'><button class="btn btn-danger">Logout</button></a></span>
-	<span style="float:right;margin-right:80px"><a href='home/deleteAccount'><button class="btn btn-default">Delete Account</button></a></span>
+	<span id="logout"><a href='home/logout'><button class="btn btn-danger">Logout</button></a></span>
+	<span id="delete_account"><a href='home/deleteAccount'><button class="btn btn-default">Delete Account</button></a></span>
 </div>    
     
     <div class="col-md-4">
-	    	
-	<!--	 <form action="home/addFriend" method="POST">-->
+
 			Friend: <input id="friendName" type="text" name="id"></input>
 			<button id="addFriendBtn">Add Friend</button>
-	<!--    </form>-->
-		<div id="friendsListArea">
-		</div>
+
+		<div id="friendsListArea"></div>
 	
-	 	<div id="friendToAddList">
-	    	
-	 	</div>
+	 	<div id="friendToAddList"></div>
 	<!--
 		<button id="gray_filter">Gray</button>		
 		<button id="sepia_filter">Sepia</button>
@@ -45,12 +42,12 @@
 		-->
 	</div>
 	
-	<div class="col-md-8" style="margin-top:0px;padding-top:0px">
+	<div class="col-md-8" id="connection_side">
 	
-    <video id="their-video" autoplay width=662 height=495 style="border-style:solid; border-width:2px"></video>
-    <video id="my-video" class="draggable" muted="true" autoplay width=200 height=200 style="position:absolute;top:308px;left:466px;"></video>
+    <video id="their_video" autoplay width=662 height=495></video>
+    <video id="my_video" class="draggable" muted="true" autoplay width=200 height=200></video>
      <textarea cols="125" rows="4" id="chatbox"></textarea>
-     <input type="text" id="chatfield" style="margin-bottom:60px"></input>
+     <input type="text" id="chatfield"></input>
      <button type="button" id="sendMessage">Send</button>
     </div>
   </body>
@@ -66,7 +63,7 @@
 
   <script>
   $(function() {
-    $( "#my-video" ).draggable({ containment: "#their-video", scroll: false });
+    $( "#my_video" ).draggable({ containment: "#their_video", scroll: false });
   });
   
   </script>
