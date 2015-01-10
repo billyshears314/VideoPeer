@@ -145,7 +145,7 @@ function updateFriendsList(){
 			
 			var data2 = data.result;
 	
-			$('#friendsListArea').html('<ul>');
+			$('#friendsListArea').html('<ul id="friendsList">');
 
 
 			var timeNow = (new Date).getTime()/1000;		
@@ -166,12 +166,19 @@ function updateFriendsList(){
 				else{
 					var status = "offline";				
 				}
-	
-				$('#friendsListArea').append('<li>' + data2[i].username + ': ' + status + ", " + timeDifference);	
+				
+				$('#friendsListArea').append('<li class="friendItem"><div class="onlineCircle"></div> <img src="images/placeholder_person.jpg" width="45" height="45" style="border-style:solid;border-width:1px;margin:5px"></img>' + data2[i].username + ': ' + status);	
+				
+				//$('.friendItem:last').append('<img src="images/placeholder_person.jpg" width="45" height="45"></img>')				
+							
+				
 				if(status==="online"){
-					$('#friendsListArea').append('<button id="connectUserButton" class="connect btn btn-success" type="button" value="'+data2[i].peerid+'">Connect</button>');
+					$('.friendItem:last').append('<button id="connectUserButton" class="connect btn btn-default" style="padding:3px 5px 1px 7px" type="button" value="'+data2[i].peerid+'"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span></button>');		
 				}
-					$('#friendsListArea').append('<button id="unfriendButton" class="unfriend btn btn-success" type="button" value="'+data2[i].username+'">Remove</button>');
+				else{
+					$('.friendItem:last > .onlineCircle').css('background-color', '#ff0000');	
+				}
+					$('.friendItem:last').append('<button id="unfriendButton" class="unfriend btn btn-default" style="padding:3px 4px 1px 4px" type="button" value="'+data2[i].username+'"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>');
 				
 				$('#friendsListArea').append('</li>');
 			}
